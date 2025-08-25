@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>No Boundaries 2025 Registration</title>
+  <meta name="color-scheme" content="light dark" />
   <style>
     :root {
       /* Palette */
@@ -59,12 +60,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    .container {
-      max-width: 760px;
-      margin: min(6vh, 48px) auto;
-      padding: clamp(16px, 3vw, 28px);
-    }
-
+    .container { max-width: 760px; margin: min(6vh, 48px) auto; padding: clamp(16px, 3vw, 28px); }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -74,19 +70,8 @@
       padding: clamp(16px, 3vw, 28px);
     }
 
-    h1 {
-      margin: 0 0 var(--space-3);
-      text-align: center;
-      font-size: clamp(22px, 3.2vw, 34px);
-      letter-spacing: .2px;
-      color: var(--primary-700);
-    }
-    .subhead {
-      text-align: center;
-      color: var(--muted);
-      margin: -6px 0 var(--space-5);
-      font-size: 0.98rem;
-    }
+    h1 { margin: 0 0 var(--space-3); text-align: center; font-size: clamp(22px, 3.2vw, 34px); letter-spacing: .2px; color: var(--primary-700); }
+    .subhead { text-align: center; color: var(--muted); margin: -6px 0 var(--space-5); font-size: 0.98rem; }
 
     fieldset {
       border: 1px solid var(--border);
@@ -99,47 +84,28 @@
     }
 
     legend {
-      margin-left: 8px;
-      padding: 6px 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--primary-700);
+      margin-left: 8px; padding: 6px 10px;
+      font-weight: 700; font-size: 1rem; color: var(--primary-700);
       background: linear-gradient(180deg, #fff, #f7f8ff);
       border: 1px solid var(--border);
       border-radius: 999px;
       box-shadow: 0 4px 10px rgba(74,99,231,0.08);
     }
 
-    label {
-      display: block;
-      margin: var(--space-2) 0 var(--space-1);
-      font-size: 0.96rem;
-      font-weight: 600;
-      color: #30384a;
-    }
+    label { display: block; margin: var(--space-2) 0 var(--space-1); font-size: 0.96rem; font-weight: 600; color: #30384a; }
     .row { display: grid; gap: var(--space-2); }
 
     input, select, textarea {
-      width: 100%;
-      height: var(--field-h);
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: #ffffff;
-      color: var(--text);
-      font-size: 1rem;
+      width: 100%; height: var(--field-h); padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: #ffffff; color: #000; font-size: 1rem;
       transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
       outline: none;
+      -webkit-text-fill-color: #000; /* ensure black while typing (iOS) */
     }
     textarea { min-height: 110px; height: auto; resize: vertical; }
-
     input::placeholder, textarea::placeholder { color: #9aa3b2; }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(74,99,231,0.15);
-      background: #fff;
-    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(74,99,231,0.15); background: #fff; }
 
     .grid { display: grid; gap: var(--space-4); }
     @media (min-width: 640px) {
@@ -147,94 +113,49 @@
       .grid.three { grid-template-columns: repeat(3, 1fr); }
     }
 
-    .checkbox-group {
-      margin-top: var(--space-2);
-      display: grid;
-      gap: 8px;
-    }
+    .checkbox-group { margin-top: var(--space-2); display: grid; gap: 8px; }
     .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 500;
-      margin: 0;
-      padding: 10px 12px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      background: #fff;
+      display: flex; align-items: center; gap: 10px; font-weight: 500; margin: 0; padding: 10px 12px;
+      border: 1px dashed var(--border); border-radius: 12px; background: #fff;
     }
-    input[type="checkbox"], input[type="radio"] {
-      width: 18px; height: 18px; min-width: 18px;
-      accent-color: var(--primary);
-    }
+    input[type="checkbox"], input[type="radio"] { width: 18px; height: 18px; min-width: 18px; accent-color: var(--primary); }
 
     .hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
     .error-message { color: var(--danger); font-size: 0.9rem; margin-top: 6px; }
     .is-invalid { border-color: var(--danger) !important; box-shadow: 0 0 0 4px rgba(230,75,75,0.12) !important; }
 
     .status {
-      margin-top: var(--space-3);
-      text-align: center;
-      font-weight: 600;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--muted);
+      margin-top: var(--space-3); text-align: center; font-weight: 600;
+      padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border);
+      background: #fff; color: var(--muted);
     }
     .status.success { color: #146c2e; background: #ecfbf1; border-color: #c9f1d6; }
     .status.error   { color: #7c1f1f; background: #ffefef; border-color: #ffd9d9; }
     .status.warn    { color: #6b4a00; background: #fff7e7; border-color: #ffe5b0; }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: var(--space-4);
-    }
-
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: var(--space-4); }
     button {
-      appearance: none;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
+      appearance: none; border: none; border-radius: 12px; padding: 12px 18px;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
       transition: transform .05s ease, box-shadow .2s ease, background .2s ease;
       min-height: 44px;
     }
     button:active { transform: translateY(1px); }
-
     .btn-primary {
-      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%);
-      color: #fff;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%); color: #fff;
       box-shadow: 0 8px 18px rgba(74,99,231,0.25), inset 0 1px 0 rgba(255,255,255,0.25);
     }
     .btn-primary:hover { background: linear-gradient(180deg, var(--primary-600), var(--primary-700)); }
-
-    .btn-secondary {
-      background: #fff;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-secondary { background: #fff; color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: var(--primary-50); }
-
-    #retryBtn {
-      display: none;
-      background: #737b8c;
-      color: #fff;
-    }
+    #retryBtn { display: none; background: #737b8c; color: #fff; }
     #retryBtn:hover { background: #5c6373; }
 
     @media (max-width: 560px) {
       .actions {
-        position: sticky;
-        bottom: 0;
+        position: sticky; bottom: 0;
         background: linear-gradient(180deg, rgba(246,247,251,0), #f6f7fb 45%);
-        padding-bottom: 8px;
-        z-index: 5;
+        padding-bottom: 8px; z-index: 5;
       }
       .container { padding: 16px; }
       fieldset { padding: var(--space-4); }
@@ -243,31 +164,17 @@
     hr { border: none; border-top: 1px dashed var(--border); margin: var(--space-5) 0; }
     small, .small { font-size: 0.88rem; color: var(--muted); }
 
-    :focus-visible {
-      outline: 3px solid rgba(74,99,231,0.35);
-      outline-offset: 2px;
-      border-radius: 12px;
-    }
-
+    :focus-visible { outline: 3px solid rgba(74,99,231,0.35); outline-offset: 2px; border-radius: 12px; }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
     @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f1220;
-        --card: #13162a;
-        --border: #2a2f46;
-        --text: #e9edff;
-        --muted: #aab2cf;
-        --primary-50: #242a55;
-      }
+      :root { --bg: #0f1220; --card: #13162a; --border: #2a2f46; --text: #e9edff; --muted: #aab2cf; --primary-50: #242a55; }
       body {
-        background:
-          radial-gradient(1200px 700px at 10% -10%, rgba(74,99,231,0.12), transparent 60%),
-          linear-gradient(180deg, #0f1220, #0e1120);
+        background: radial-gradient(1200px 700px at 10% -10%, rgba(74,99,231,0.12), transparent 60%), linear-gradient(180deg, #0f1220, #0e1120);
       }
       .card, fieldset { box-shadow: 0 14px 36px rgba(0,0,0,0.35); }
       legend { background: linear-gradient(180deg, #181c33, #14182b); color: #bfc9ff; border-color: #2a2f46; }
-      input, select, textarea { background: #11162a; border-color: #2a2f46; color: #e9edff; }
+      input, select, textarea { background: #11162a; border-color: #2a2f46; color: #fff; -webkit-text-fill-color:#fff; }
       input::placeholder, textarea::placeholder { color: #8c95b7; }
       .btn-secondary { background: #151a31; color: #e9edff; border-color: #2a2f46; }
       .status { background: #141a33; border-color: #2a2f46; color: #c9d2ff; }
@@ -275,30 +182,79 @@
       .status.error { background: #2a1414; border-color: #5a2a2a; color: #ffd0d0; }
       .status.warn { background: #2a2210; border-color: #5a4a1a; color: #ffe7b3; }
     }
+
+    /* Signature Pad */
+    .sig-wrap { border: 1px dashed var(--border); background: #fff; border-radius: 12px; box-shadow: var(--shadow-1); padding: 10px; }
+    .sig-toolbar { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .sig-toolbar .small { margin: 0; }
+    .sig-canvas {
+      width: 100%; height: 180px;
+      border: 1px solid var(--border); border-radius: 10px; touch-action: none; background: #fff; user-select: none; cursor: crosshair;
+    }
+    .sig-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="card">
-      <div> <img style="justify-content: center; text-align: center; max-width: 100%;"  src="/img/fleetfeet.jpg" alt=""></div>
-      <h1>No Boundaries 2025 Registration</h1>
+    <div class="card" role="region" aria-labelledby="title">
+      <div><img style="display:block;margin:0 auto; max-width: 100%;" src="/img/FF VT Logo.jpg" alt="Fleet Feet Vermont logo"></div>
+      <h1 id="title">No Boundaries 2025 Registration</h1>
+      <p class="subhead" id="desc">Join our Fall 2025 program. Please complete all required fields.</p>
+        <div><img style="display:block;margin:0 auto; max-width: 100%;" src="/img/NOBO.jpg" alt="Fleet Feet Vermont logo"></div>
 
-      <form id="regForm">
+      <form id="regForm" aria-describedby="desc" novalidate>
         <!-- Contact -->
         <fieldset>
           <legend>Contact Information</legend>
-          <label>First Name <input type="text" name="firstName" required></label>
-          <label>Last Name <input type="text" name="lastName" required></label>
-          <label>Email <input type="email" name="email" required></label>
+          <label>First Name
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label>Last Name
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label>Email
+            <input type="email" name="email" inputmode="email" autocomplete="email" required>
+          </label>
+
           <div class="grid two">
-            <label>Street <input type="text" name="street"></label>
-            <label>Town <input type="text" name="town"></label>
+            <label>Street
+              <input type="text" name="street" autocomplete="address-line1">
+            </label>
+            <label>Town
+              <input type="text" name="town" autocomplete="address-level2">
+            </label>
           </div>
           <div class="grid three">
-            <label>State <input type="text" name="state" maxlength="2" placeholder="VT"></label>
-            <label>Zip <input type="text" name="zip" inputmode="numeric" placeholder="12345"></label>
-            <label>Phone <input type="tel" name="phone" placeholder="(555) 555-5555"></label>
+            <label>State
+              <select name="state" aria-label="State">
+                <option value="">Select…</option>
+                <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+              </select>
+            </label>
+            <label>
+  Zip 
+  <input 
+    type="text" 
+    name="zip" 
+    pattern="\d{5}(-\d{4})?" 
+    inputmode="numeric" 
+    placeholder="12345" 
+    required>
+</label>
+            <label>Phone
+              <input type="tel" name="phone" inputmode="tel" placeholder="(555) 555-5555" aria-describedby="phoneHint">
+            </label>
           </div>
+          <div id="phoneHint" class="hint">Format auto-applies as you type.</div>
         </fieldset>
 
         <!-- Emergency Contact -->
@@ -313,31 +269,42 @@
         <!-- Programs -->
         <fieldset>
           <legend>Programs</legend>
-          <div class="checkbox-group">
+          <div class="checkbox-group" id="programsGroup" role="group" aria-labelledby="pgLbl">
+            <span id="pgLbl" class="sr-only" aria-hidden="true"></span>
             <label><input type="checkbox" name="programs" value="5k-walk"> 5k Walk</label>
             <label><input type="checkbox" name="programs" value="beginner-5k-run"> Beginner 5k Run</label>
             <label><input type="checkbox" name="programs" value="10k"> 10k Run</label>
           </div>
+          <div class="hint">Select at least one.</div>
         </fieldset>
 
         <!-- Age -->
         <fieldset>
           <legend>Age</legend>
           <div class="checkbox-group" style="border:0; background:transparent; padding:0;">
-            <label style="border-style:solid;">
-              <input type="radio" name="ageType" value="adult" checked> Adult (18+)
-            </label>
-            <label style="border-style:solid;">
-              <input type="radio" name="ageType" value="minor"> Minor (under 18)
-            </label>
+            <label style="border-style:solid;"><input type="radio" name="ageType" value="adult" checked> Adult (18+)</label>
+            <label style="border-style:solid;"><input type="radio" name="ageType" value="minor"> Minor (under 18)</label>
           </div>
         </fieldset>
 
         <!-- Guardian (conditional) -->
         <fieldset id="guardianFields" style="display:none;">
           <legend>Parent or Guardian Information</legend>
-          <div class="grid three">
-            <label>Parent/Guardian Signature <input type="text" name="guardSig"></label>
+
+          <div class="sig-wrap" id="guardianSigWrap">
+            <div class="sig-toolbar">
+              <strong>Parent/Guardian Signature</strong>
+              <p class="small">Required for minors</p>
+            </div>
+            <canvas class="sig-canvas" id="guardianSig" aria-label="Parent or Guardian Signature"></canvas>
+            <div class="sig-actions">
+              <button type="button" class="btn-secondary" id="guardianUndo">Undo</button>
+              <button type="button" class="btn-secondary" id="guardianClear">Clear</button>
+            </div>
+            <input type="hidden" name="guardianSignature" id="guardianSignature">
+          </div>
+
+          <div class="grid three" style="margin-top:12px;">
             <label>Print Name <input type="text" name="guardName"></label>
             <label>Date <input type="date" name="guardDate"></label>
           </div>
@@ -348,23 +315,63 @@
         <fieldset>
           <legend>Waiver &amp; Release of Liability</legend>
           <div class="row">
-            <div id="waiverText" class="small" style="max-height:220px; overflow:auto; padding:12px; border:1px dashed var(--border); border-radius:12px; background:#fff;">
+            <div id="waiverText"
+                 class="small"
+                 style="max-height:320px; overflow:auto; padding:12px; border:1px dashed var(--border); border-radius:12px; background:#fff;">
               <p><strong>Individual Event Participation Waiver and Release of Liability</strong></p>
+
               <p>Individual as listed below (a “Participant”) desires to enter and participate in No Boundaries Fall 2025 (the “Event”), hosted by Fleet Feet Vermont (the “Event Director”). By signing below, and in consideration of the Released Parties (defined herein) accepting this entry and allowing them to participate in the Event and as a condition for entry and participation in the Event, Participant agrees to all the terms and conditions of this waiver and release (“Release”).</p>
+
               <p>Participant, for themselves and their heirs, successors, and assigns, hereby waive, release, and forever discharge, Event Director, the participating Fleet Feet franchised business, Fleet Feet, Incorporated, and their respective parents, affiliates, subsidiaries, successors and assigns, shareholders, members, partners, officers, directors, managers, agents, employees, contractors, representatives, and volunteers (collectively, the “Released Parties”), from any and all claims, responsibilities or liability, now known or hereafter known, arising from injuries, disability, death, or damages to them or their personal property (including but not limited to any pets each Participant may bring to the Event) resulting from their participation in the Event or receipt of any prize, whether arising out of the ordinary negligence of the Released Parties or otherwise. Each Participant agrees not to file a suit, complaint, or grievance or make any claims against the Released Parties before any arbitration organization, in any local, state, or federal court, or administrative office on account of any injuries, disability, death, or damages covered herein. Each Participant forever releases and discharges the Released Parties from liability under such claims. It is the mutual intention of the Participant and the Released Parties that this release be general in scope and effect and that any claims arising in relation to participation in the Event, past, present or future, and asserted against the Released Parties are hereby forever canceled and forgiven.</p>
-              <p><strong>RISKS:</strong> Participant is aware and understands that training, running, working out, and participating in the Event is each a potentially dangerous activity and involves the risk of injury, disability, death, or damages to the Participant or Participant’s property…</p>
-              <p>In the event of an illness, injury, or medical emergency arising during the event, Participant hereby authorizes and gives their consent to any medical treatment deemed necessary…</p>
-              <p>This Release constitutes the sole and entire agreement… governed by the laws of the State of Vermont… Essex Junction, VT…</p>
-              <p><em>BY SIGNING THIS RELEASE, PARTICIPANT ACKNOWLEDGES THAT PARTICIPANT HAS READ AND AGREED TO THE ABOVE TERMS. PARTICIPANT IS VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE RELEASED PARTIES.</em></p>
+
+              <p><strong>PARTICIPANT IS AWARE AND UNDERSTANDS THAT TRAINING, RUNNING, WORKING OUT, AND PARTICIPATING IN THE EVENT IS EACH A POTENTIALLY DANGEROUS ACTIVITY AND INVOLVES THE RISK OF INJURY, DISABILITY, DEATH, OR DAMAGES TO THE PARTICIPANT OR PARTICIPANT’S PROPERTY. PARTICIPANT ACKNOWLEDGES THAT PARTICIPANT WILL BE SOLELY RESPONSIBLE FOR DETERMINING WHERE PARTICIPANT WILL TRAIN, RUN, WORKOUT, AND OTHERWISE PARTICIPATE IN THE EVENT. PARTICIPANT ACKNOWLEDGES THAT PARTICIPANT IS VOLUNTARILY PARTICIPATING IN THE EVENT WITH AN EXPRESS UNDERSTANDING OF THE DANGER INVOLVED AND HEREBY AGREES TO ACCEPT AND ASSUME ANY AND ALL RISKS OF INJURY, DISABILITY, DEATH, AND/OR DAMAGE TO PARTICIPANT OR PARTICIPANT’S PROPERTY, ARISING FROM THE EVENT, TRAINING, RUNNING, OR WORKING OUT OR THE LOCATIONS OF SUCH ACTIVITIES, WHETHER CAUSED BY THE ORDINARY NEGLIGENCE OF THE RELEASED PARTIES OR OTHERWISE. THE RISKS INCLUDE, WITHOUT LIMITATION, CONTACT WITH OTHER PARTICIPANTS, TRAINING INJURIES, ROAD HAZARDS, VEHICLES, WEATHER, CONTAGIOUS DISEASES LIKE COVID-19, AND TRAFFIC.</strong></p>
+
+              <p>4368039v2.EJB.16492.G30793</p>
+
+              <p>In the event of an illness, injury, or medical emergency arising during the event, Participant hereby authorizes and gives their consent to any medical treatment deemed necessary, in the judgment of the Event Director or any of its designees, for their immediate care. Participant agrees that Participant will be fully responsible for payment of any and all medical services and treatment rendered to Participant, including but not limited to medical transport, medications, treatment, and hospitalization and agrees to indemnify and hold harmless the Released Parties from any liability associated with the treatment or related expenses.</p>
+
+              <p>Participant will not participate in the Event unless Participant is medically able to do so. Participant certifies as a material condition to Participant’s participation in the Event, that Participant is physically fit and sufficiently trained for the completion of the Event and that a licensed medical doctor has verified their physical condition. Participant agrees to abide by all decisions of the Event Director or any of its designees relative to their ability to safely participate in the Event.</p>
+
+              <p>Participant acknowledges and agrees that information provided in conjunction with the Event is for informational, educational, and recreational purposes only, is not medical or professional advice, is not a substitute for medical or professional advice, and is not for the diagnosis, treatment, prevention, or cure of any disease or health conditions.</p>
+
+              <p>While participating in the Event, Participant may provide to Event Director or its designees information such as their name, contact information, age, gender and other demographic, physical, physiological or identifying characteristics specifically requested. Participant participation in the Event is voluntary. By participating in the Event and giving such data to the Event Director or its designees, Participant hereby grants the Event Director and its designees, permission to collect, capture, record and store the data, and grant to each of the Event Director a license to use the data for any purposes whatsoever.</p>
+
+              <p>The Event Director reserves the right to change the details, prizes, terms, and conditions of the Event at any time for any reason, and Participant hereby waives and releases any claims that Participant may have as a result of any such change. Participant grants permission for the Released Parties to use or authorize others to use any photographs, video or sound recordings, and/or other record of Participant’s participation in the Event, including Participant’s name, picture, likeness, and image, for any legitimate purposes without remuneration to Participant.</p>
+
+              <p>This Release constitutes the sole and entire agreement of the Released Parties and Participant with respect to the subject matter contained herein and supersedes all prior and contemporaneous understandings, agreements, representations, and warranties, with respect to such subject matter. If any term of this Release is invalid, illegal, or unenforceable in any jurisdiction, such invalidity, illegality, or unenforceability shall not affect any other term of this Release or invalidate or render unenforceable such term in any other jurisdiction. This Release is binding on and shall inure to the benefit of the Released Parties and Participant and its respective heirs, successors, and assigns. All matters arising out of or relating to this Release shall be governed by and construed in accordance with the laws of the State of Vermont. Any claim or cause of action arising under this Release may be brought only in the federal and state courts located in the City of Essex Junction, VT and Participant hereby consents to the exclusive jurisdiction of such courts.</p>
+
+              <p><strong>BY SIGNING THIS RELEASE, PARTICIPANT ACKNOWLEDGES THAT PARTICIPANT HAS READ AND AGREED TO THE ABOVE TERMS. PARTICIPANT ACKNOWLEDGES THAT PARTICIPANT IS VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE RELEASED PARTIES.</strong></p>
+
+              <p>I represent and warrant that I am the parent or legal guardian of the minor participant named above, no court has issued any order, judgment, or decree granting custody of the minor to anyone else or otherwise affecting my rights as parent or legal guardian, the minor has not been emancipated, I have the legal right, power, and authority to consent to this Release on behalf of the minor and myself, and I am at least 18 years of age. I agree to defend, indemnify, and hold harmless the Released Parties from and against all liabilities resulting from my breach or alleged breach of these representations and warranties.</p>
+
+              <p>I have read, and I understand, this entire Release. By signing below, I hereby consent to and approve in all respects the terms and conditions of this Release and the minor&#39;s execution of this Release and agree that both the minor and I shall be bound by all of its terms and conditions.</p>
             </div>
           </div>
+
           <div class="checkbox-group" style="margin-top:var(--space-3);">
             <label style="border-style:solid;">
-              <input type="checkbox" name="waiverAgree" required> I have read and agree to the Waiver &amp; Release.
+              <input type="checkbox" name="waiverAgree" id="waiverAgree" required disabled>
+              I have scrolled and agree to the Waiver &amp; Release.
             </label>
           </div>
+
           <div class="grid two">
             <label>Initials <input type="text" name="waiverInitials" maxlength="4" placeholder="ABC" required></label>
+          </div>
+
+          <!-- Participant Signature -->
+          <div class="sig-wrap" id="participantSigWrap" style="margin-top:12px;">
+            <div class="sig-toolbar">
+              <strong>Participant Signature</strong>
+              <p class="small">Sign with mouse, touch, or stylus</p>
+            </div>
+            <canvas class="sig-canvas" id="participantSig" aria-label="Participant Signature"></canvas>
+            <div class="sig-actions">
+              <button type="button" class="btn-secondary" id="participantUndo">Undo</button>
+              <button type="button" class="btn-secondary" id="participantClear">Clear</button>
+            </div>
+            <input type="hidden" name="participantSignature" id="participantSignature" required>
+            <div class="hint">Required for all participants.</div>
           </div>
         </fieldset>
 
@@ -373,40 +380,78 @@
           <button type="submit" class="btn-primary">Submit Registration</button>
           <button id="retryBtn" type="button" class="btn-secondary">Retry Pending</button>
         </div>
-        <div class="status" id="formStatus"></div>
+        <div class="status" id="formStatus" role="status" aria-live="polite"></div>
       </form>
     </div>
   </div>
 
   <script>
-    // Your deployed Apps Script Web App URL (exec)
-    const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxZQ2r5y_ug47dUaMklBdjVBbaUNmU8tXovK-E_PVepz9uaOd1EpIpiT_jR3g4xuvyAig/exec";
+    // ===== CONFIG =====
+    const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbwvGQLcABnxe9O59sLL6zbULla43xovgFzfPDsZhch-Ky2TqJWeGYCvIZwtd-6tdtQ6pg/exec";
+    const MAX_EXPORT_WIDTH = 900;        // max signature width when exporting (px)
+    const EXPORT_MIME = 'image/jpeg';    // 'image/png' if you prefer lossless
+    const EXPORT_QUALITY = 0.9;          // 0.75–0.9 keeps size low & crisp
 
     const form = document.getElementById("regForm");
     const statusEl = document.getElementById("formStatus");
     const retryBtn = document.getElementById("retryBtn");
     const QUEUE_KEY = "nb2025_queue";
 
-    // ----- Age/Guardian dynamic required -----
+    // ===== Age/Guardian toggle =====
     const ageAdult = form.querySelector('input[name="ageType"][value="adult"]');
     const ageMinor = form.querySelector('input[name="ageType"][value="minor"]');
     const guardianFS = document.getElementById("guardianFields");
-    const guardInputs = guardianFS.querySelectorAll('input[name="guardSig"], input[name="guardName"], input[name="guardDate"]');
-
+    const guardInputs = guardianFS.querySelectorAll('input[name="guardName"], input[name="guardDate"]');
     function toggleGuardian() {
       if (ageMinor.checked) {
         guardianFS.style.display = "block";
         guardInputs.forEach(i => i.required = true);
+        document.getElementById('guardianSignature').required = true;
       } else {
         guardianFS.style.display = "none";
         guardInputs.forEach(i => i.required = false);
+        document.getElementById('guardianSignature').required = false;
       }
     }
     ageAdult.addEventListener("change", toggleGuardian);
     ageMinor.addEventListener("change", toggleGuardian);
-    toggleGuardian(); // run on load
+    toggleGuardian();
 
-    // ----- Offline queue helpers -----
+    // ===== Waiver scroll-to-enable =====
+    const waiverBox = document.getElementById('waiverText');
+    const waiverAgree = document.getElementById('waiverAgree');
+    function checkWaiverScrolled() {
+      const atBottom = waiverBox.scrollTop + waiverBox.clientHeight >= waiverBox.scrollHeight - 4;
+      if (atBottom) waiverAgree.disabled = false;
+    }
+    waiverBox.addEventListener('scroll', checkWaiverScrolled);
+    window.addEventListener('load', checkWaiverScrolled);
+
+    // ===== Phone helpers (format (###) ###-####) =====
+    function formatPhone(el) {
+      let v = el.value.replace(/\D/g,'').slice(0,10);
+      if (v.length >= 7) el.value = `(${v.slice(0,3)}) ${v.slice(3,6)}-${v.slice(6)}`;
+      else if (v.length >= 4) el.value = `(${v.slice(0,3)}) ${v.slice(3)}`;
+      else if (v.length >= 1) el.value = `(${v}`;
+      else el.value = '';
+    }
+    ['phone','ecPhone'].forEach(name=>{
+      const el = form.querySelector(`input[name="${name}"]`);
+      el.addEventListener('input', ()=>formatPhone(el));
+      el.addEventListener('blur', ()=>formatPhone(el));
+    });
+
+    // ===== Ensure at least one Program selected =====
+    function validatePrograms() {
+      const any = form.querySelectorAll('input[name="programs"]:checked').length > 0;
+      if (!any) {
+        statusEl.className = "status warn";
+        statusEl.textContent = "Please select at least one program.";
+      }
+      return any;
+    }
+
+    // ===== Offline queue helpers =====
     function enqueue(entry){
       const q = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
       q.push(entry);
@@ -417,9 +462,7 @@
       localStorage.removeItem(QUEUE_KEY);
       return q;
     }
-    function hasQueue(){
-      return (JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]").length > 0);
-    }
+    function hasQueue(){ return (JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]").length > 0); }
     function showRetryIfNeeded(){
       retryBtn.style.display = hasQueue() ? "inline-block" : "none";
       if (hasQueue()) {
@@ -429,13 +472,9 @@
     }
     function fdToObj(fd){
       const obj={};
-      fd.forEach((v,k)=>{
-        if (obj[k]) { Array.isArray(obj[k]) ? obj[k].push(v) : obj[k] = [obj[k], v]; }
-        else obj[k]=v;
-      });
+      fd.forEach((v,k)=>{ if (obj[k]) { Array.isArray(obj[k]) ? obj[k].push(v) : obj[k] = [obj[k], v]; } else obj[k]=v; });
       return obj;
     }
-
     async function postWithRetry(fd, tries = 0){
       const max = 3;
       try{
@@ -448,68 +487,255 @@
       }
     }
 
-    // ----- Submit handler -----
+    // ===== Pro Signature Pad (smoothing + pressure + undo) =====
+    class ProSignaturePad {
+      constructor(canvas, onChange) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.onChange = onChange || (()=>{});
+        this.strokes = []; // each stroke = [{x,y,p},...]
+        this.current = null;
+        this.baseWidth = 2;
+        this.bg = '#ffffff';
+        this.ink = '#111827';
+        this._resize = this._resize.bind(this);
+        this._attach();
+        this._resize();
+      }
+      _attach(){
+        window.addEventListener('resize', this._resize);
+        const c = this.canvas;
+        c.addEventListener('pointerdown', e=>{
+          e.preventDefault(); c.setPointerCapture(e.pointerId);
+          const pt = this._pos(e);
+          this.current = [pt];
+        });
+        c.addEventListener('pointermove', e=>{
+          if (!this.current) return;
+          const pt = this._pos(e);
+          this.current.push(pt);
+          this._redraw(); // incremental redraw
+          this.onChange(false);
+        });
+        const end = (e)=>{
+          if (this.current && this.current.length>0) this.strokes.push(this.current);
+          this.current = null;
+        };
+        c.addEventListener('pointerup', end);
+        c.addEventListener('pointerleave', end);
+        c.addEventListener('pointercancel', end);
+      }
+      _pos(e){
+        const r = this.canvas.getBoundingClientRect();
+        const p = (typeof e.pressure === 'number' && e.pressure>0) ? e.pressure : 0.5; // 0.0–1.0
+        return { x: e.clientX - r.left, y: e.clientY - r.top, p };
+      }
+      _resize(){
+        const ratio = Math.max(1, window.devicePixelRatio || 1);
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width  = Math.round(rect.width * ratio);
+        this.canvas.height = Math.round(rect.height * ratio);
+        this.ctx.setTransform(ratio,0,0,ratio,0,0);
+        this._paintBg();
+        this._redraw(true);
+      }
+      _paintBg(){
+        this.ctx.save();
+        this.ctx.fillStyle = this.bg;
+        this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
+        this.ctx.restore();
+      }
+      _drawStroke(points){
+        if (points.length<2) { // dot
+          const p = points[0];
+          this.ctx.beginPath();
+          this.ctx.fillStyle = this.ink;
+          this.ctx.arc(p.x, p.y, this.baseWidth, 0, Math.PI*2);
+          this.ctx.fill(); this.ctx.closePath();
+          return;
+        }
+        // simple smoothing: quadratic Bézier between midpoints
+        this.ctx.strokeStyle = this.ink;
+        this.ctx.lineCap = 'round';
+        this.ctx.lineJoin = 'round';
+
+        const mid = (a,b)=>({x:(a.x+b.x)/2, y:(a.y+b.y)/2, p:(a.p+b.p)/2});
+        let prev = points[0];
+        let mPrev = prev;
+
+        for (let i=1; i<points.length; i++){
+          const curr = points[i];
+          const mCurr = mid(prev, curr);
+          // pressure-based width
+          const w = this.baseWidth * (0.65 + (curr.p||0.5));
+          this.ctx.lineWidth = Math.max(1.2, Math.min(5, w));
+
+          this.ctx.beginPath();
+          this.ctx.moveTo(mPrev.x, mPrev.y);
+          this.ctx.quadraticCurveTo(prev.x, prev.y, mCurr.x, mCurr.y);
+          this.ctx.stroke();
+          this.ctx.closePath();
+          mPrev = mCurr;
+          prev = curr;
+        }
+      }
+      _redraw(clear=false){
+        if (clear) this._paintBg();
+        else {
+          // repaint bg, then all strokes
+          this._paintBg();
+        }
+        for (const s of this.strokes) this._drawStroke(s);
+        if (this.current) this._drawStroke(this.current);
+      }
+      clear(){
+        this.strokes = [];
+        this.current = null;
+        this._paintBg();
+        this.onChange(true);
+      }
+      undo(){
+        this.strokes.pop();
+        this._redraw(true);
+        this.onChange(this.strokes.length===0);
+      }
+      isEmpty(){ return this.strokes.length===0 && (!this.current || this.current.length===0); }
+
+      _exportScaled(mime=EXPORT_MIME, quality=EXPORT_QUALITY){
+        // draw onto an offscreen canvas to constrain width & compress
+        const rect = this.canvas.getBoundingClientRect();
+        const scale = Math.min(1, MAX_EXPORT_WIDTH / rect.width);
+        const outW = Math.round(rect.width * scale);
+        const outH = Math.round(rect.height * scale);
+        const off = document.createElement('canvas');
+        off.width = outW; off.height = outH;
+        const octx = off.getContext('2d');
+        // bg
+        octx.fillStyle = '#fff'; octx.fillRect(0,0,outW,outH);
+
+        // replay strokes scaled
+        const s = scale;
+        octx.lineCap = 'round'; octx.lineJoin = 'round'; octx.strokeStyle = this.ink;
+        const drawScaled = (pts)=>{
+          if (pts.length<2){
+            const p = pts[0]; octx.beginPath(); octx.arc(p.x*s, p.y*s, this.baseWidth*s, 0, Math.PI*2); octx.fill(); octx.closePath(); return;
+          }
+          const mid=(a,b)=>({x:(a.x+b.x)/2, y:(a.y+b.y)/2, p:(a.p+b.p)/2});
+          let prev=pts[0], mPrev=prev;
+          for (let i=1; i<pts.length; i++){
+            const curr=pts[i], mCurr=mid(prev,curr);
+            const w = this.baseWidth*(0.65 + (curr.p||0.5));
+            octx.lineWidth = Math.max(1, Math.min(5, w))*s;
+            octx.beginPath();
+            octx.moveTo(mPrev.x*s, mPrev.y*s);
+            octx.quadraticCurveTo(prev.x*s, prev.y*s, mCurr.x*s, mCurr.y*s);
+            octx.stroke(); octx.closePath();
+            mPrev=mCurr; prev=curr;
+          }
+        };
+        for (const stroke of this.strokes) drawScaled(stroke);
+        if (this.current) drawScaled(this.current);
+        return off.toDataURL(mime, quality);
+      }
+
+      toDataURL(){ return this._exportScaled(); }
+    }
+
+    // ===== Initialize signature pads =====
+    const participantPad = new ProSignaturePad(
+      document.getElementById('participantSig'),
+      (isEmpty)=>{ if (!isEmpty) document.getElementById('participantSignature').setCustomValidity(''); }
+    );
+    document.getElementById('participantUndo').addEventListener('click', ()=>participantPad.undo());
+    document.getElementById('participantClear').addEventListener('click', ()=>{
+      participantPad.clear(); document.getElementById('participantSignature').value = '';
+    });
+
+    const guardianCanvas = document.getElementById('guardianSig');
+    const guardianHidden = document.getElementById('guardianSignature');
+    let guardianPad = null;
+    if (guardianCanvas) {
+      guardianPad = new ProSignaturePad(
+        guardianCanvas,
+        (isEmpty)=>{ if (!isEmpty) guardianHidden.setCustomValidity(''); }
+      );
+      document.getElementById('guardianUndo').addEventListener('click', ()=>guardianPad.undo());
+      document.getElementById('guardianClear').addEventListener('click', ()=>{
+        guardianPad.clear(); guardianHidden.value = '';
+      });
+    }
+
+    // ===== Submit handler =====
     form.addEventListener("submit", async (e)=>{
       e.preventDefault();
 
-      // Native HTML validation first (covers guardian fields when minor)
-      if (!form.checkValidity()) {
-        // Let the browser show which fields need attention
-        form.reportValidity();
-        return;
+      // Programs required
+      if (!validatePrograms()) return;
+
+      // Signatures
+      const participantHidden = document.getElementById('participantSignature');
+      if (participantPad.isEmpty()) {
+        participantHidden.setCustomValidity('Please provide your signature.');
+      } else {
+        participantHidden.value = participantPad.toDataURL();
+        participantHidden.setCustomValidity('');
       }
+      const isMinor = ageMinor.checked;
+      if (guardianPad) {
+        if (isMinor && guardianPad.isEmpty()) {
+          guardianHidden.setCustomValidity('Parent/Guardian signature required for minors.');
+        } else {
+          if (!guardianPad.isEmpty()) guardianHidden.value = guardianPad.toDataURL();
+          guardianHidden.setCustomValidity('');
+        }
+      }
+
+      // Built-in validation
+      if (!form.checkValidity()) { form.reportValidity(); return; }
 
       const fd = new FormData(form);
 
       // Normalize programs to multiple keys
       const programs = Array.from(form.querySelectorAll('input[name="programs"]:checked')).map(i=>i.value);
-      fd.delete("programs");
-      programs.forEach(v=>fd.append("programs", v));
+      fd.delete("programs"); programs.forEach(v=>fd.append("programs", v));
 
-      // Required by Apps Script handler
+      // Required by Apps Script handler + helpful metadata
       if (!fd.get("_ts"))         fd.append("_ts", Date.now().toString());
       if (!fd.get("submittedAt")) fd.append("submittedAt", new Date().toISOString());
-      if (!fd.get("website"))     fd.append("website", ""); // honeypot empty
+      if (!fd.get("website"))     fd.append("website", ""); // honeypot
+      fd.append("_ua", navigator.userAgent);
 
       const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting…";
+      submitBtn.disabled = true; submitBtn.textContent = "Submitting…";
 
       try{
         if(!navigator.onLine){
           enqueue(fdToObj(fd));
           statusEl.className = "status success";
           statusEl.textContent = "Saved offline. We’ll auto-send when you’re back online.";
-          form.reset();
-          toggleGuardian();
+          form.reset(); participantPad.clear(); guardianPad && guardianPad.clear(); toggleGuardian();
         } else {
           await postWithRetry(fd);
           statusEl.className = "status success";
           statusEl.textContent = "Thanks! Your registration has been submitted.";
-          form.reset();
-          toggleGuardian();
+          form.reset(); participantPad.clear(); guardianPad && guardianPad.clear(); toggleGuardian();
         }
       }catch(err){
         enqueue(fdToObj(fd));
         statusEl.className = "status error";
         statusEl.textContent = "Couldn’t reach server. Saved offline; retry later.";
       }finally{
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Registration";
+        submitBtn.disabled = false; submitBtn.textContent = "Submit Registration";
         showRetryIfNeeded();
       }
     });
 
-    // ----- Retry button -----
+    // ===== Retry button =====
     retryBtn.addEventListener("click", async ()=>{
-      const pending = dequeueAll();
-      const remain = [];
+      const pending = dequeueAll(); const remain = [];
       for (const entry of pending){
         const fd = new FormData();
-        Object.entries(entry).forEach(([k,v])=>{
-          if (Array.isArray(v)) v.forEach(x=>fd.append(k,x));
-          else fd.append(k,v);
-        });
+        Object.entries(entry).forEach(([k,v])=>{ Array.isArray(v) ? v.forEach(x=>fd.append(k,x)) : fd.append(k,v); });
         try{ await postWithRetry(fd); }catch(e){ remain.push(entry); }
       }
       if (remain.length) localStorage.setItem(QUEUE_KEY, JSON.stringify(remain));
