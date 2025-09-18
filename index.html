@@ -6,14 +6,14 @@
   <title>No Boundaries 2025 Registration</title>
   <meta name="color-scheme" content="light dark" />
 
-  <!-- Allow data: images so Base64 signature previews render -->
+  <!-- Allow data: images so Base64 signature previews render; allow jsDelivr for jsPDF -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  img-src 'self' data: blob:;
                  style-src 'self' 'unsafe-inline';
-                 script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+                 script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'">
 
-  <!-- jsPDF for client-side PDF generation (optional but enabled) -->
+  <!-- jsPDF for client-side PDF generation -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <style>
@@ -194,18 +194,17 @@
       .status.warn { background: #2a2210; border-color: #5a4a1a; color: #ffe7b3; }
     }
 
-    /* Signature Pad */
-    .sig-wrap { border: 1px dashed var(--border); background: #fff; border-radius: 12px; box-shadow: var(--shadow-1); padding: 10px; }
+    /* Signature Pad + layering so canvas always captures input */
+    .sig-wrap { border: 1px dashed var(--border); background: #fff; border-radius: 12px; box-shadow: var(--shadow-1); padding: 10px; position: relative; }
     .sig-toolbar { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .sig-toolbar .small { margin: 0; }
     .sig-canvas {
       width: 100%; height: 180px;
       border: 1px solid var(--border); border-radius: 10px; touch-action: none; background: #fff; user-select: none; cursor: crosshair;
+      position: relative; z-index: 2;
     }
     .sig-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
-
-    /* Signature previews */
-    .sig-preview { display:none; margin-top: 10px; }
+    .sig-preview { display:none; margin-top: 10px; position: relative; z-index: 1; }
     .sig-preview strong { display:block; margin-bottom: 6px; }
     .sig-preview img { max-width: 420px; width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 6px; background: #fff; }
   </style>
@@ -366,6 +365,9 @@
 
               <p>I have read, and I understand, this entire Release. By signing below, I hereby consent to and approve in all respects the terms and conditions of this Release and the minor&#39;s execution of this Release and agree that both the minor and I shall be bound by all of its terms and conditions.</p>
               <!-- END: Waiver text (unchanged) -->
+
+              <!-- Sentinel to detect end-of-waiver visibility (for page scroll/touch) -->
+              <div id="waiverSentinel" style="height:1px;"></div>
             </div>
           </div>
 
@@ -444,33 +446,44 @@
         guardInputs.forEach(i => i.required = false);
         document.getElementById('guardianSignature').required = false;
       }
-      refreshSignaturePreviews(); // hide/show guardian preview as needed
+      refreshSignaturePreviews();
     }
     ageAdult.addEventListener("change", toggleGuardian);
     ageMinor.addEventListener("change", toggleGuardian);
     toggleGuardian();
 
-    // ===== Waiver scroll-to-enable (with accessibility & no-scroll fallback) =====
-    const waiverBox   = document.getElementById('waiverText');
-    const waiverAgree = document.getElementById('waiverAgree');
+    // ===== Waiver scroll-to-enable (robust + accessible) =====
+    const waiverBox      = document.getElementById('waiverText');
+    const waiverAgree    = document.getElementById('waiverAgree');
+    const waiverSentinel = document.getElementById('waiverSentinel');
 
     function canScroll(el){ return el.scrollHeight - el.clientHeight > 2; }
+    function enableWaiver(){ waiverAgree.disabled = false; }
     function updateWaiverState(){
       if (!canScroll(waiverBox)) {
-        waiverAgree.disabled = false; // nothing to scroll — allow agreement
+        enableWaiver(); // nothing to scroll — allow agreement
       } else {
         if (!waiverAgree.checked) waiverAgree.disabled = true;
       }
     }
     function checkWaiverScrolled() {
       const atBottom = waiverBox.scrollTop + waiverBox.clientHeight >= waiverBox.scrollHeight - 4;
-      if (atBottom) waiverAgree.disabled = false;
+      if (atBottom) enableWaiver();
     }
     waiverBox.addEventListener('scroll', checkWaiverScrolled);
     waiverBox.addEventListener('keydown', e=>{
       if (e.key === 'End') { waiverBox.scrollTop = waiverBox.scrollHeight; e.preventDefault(); }
       if (e.key === 'PageDown') { waiverBox.scrollTop += waiverBox.clientHeight; e.preventDefault(); }
     });
+
+    // Also enable when page-scrolling reveals the sentinel at the end
+    if ('IntersectionObserver' in window && waiverSentinel) {
+      const io = new IntersectionObserver(entries=>{
+        if (entries.some(en=>en.isIntersecting)) enableWaiver();
+      }, { root: null, threshold: 1.0 });
+      io.observe(waiverSentinel);
+    }
+
     window.addEventListener('load',  ()=>{ updateWaiverState(); checkWaiverScrolled(); });
     window.addEventListener('resize',()=>{ updateWaiverState(); checkWaiverScrolled(); });
 
@@ -690,7 +703,7 @@
     const participantHidden = document.getElementById('participantSignature');
     const participantPad = new ProSignaturePad(
       document.getElementById('participantSig'),
-      () => { // onChange: keep hidden input + preview in sync
+      () => {
         if (!participantPad.isEmpty()) {
           participantHidden.value = participantPad.toDataURL();
           participantHidden.setCustomValidity('');
@@ -698,10 +711,12 @@
         refreshSignaturePreviews();
       }
     );
+    // Extra resize to avoid mobile 0x0 sizing glitch
+    requestAnimationFrame(()=> participantPad._resize());
+
     document.getElementById('participantUndo').addEventListener('click', ()=>{
       participantPad.undo();
-      if (participantPad.isEmpty()) participantHidden.value = '';
-      else participantHidden.value = participantPad.toDataURL();
+      participantHidden.value = participantPad.isEmpty() ? '' : participantPad.toDataURL();
       refreshSignaturePreviews();
     });
     document.getElementById('participantClear').addEventListener('click', ()=>{
@@ -724,6 +739,8 @@
           refreshSignaturePreviews();
         }
       );
+      requestAnimationFrame(()=> guardianPad._resize());
+
       document.getElementById('guardianUndo').addEventListener('click', ()=>{
         guardianPad.undo();
         guardianHidden.value = guardianPad.isEmpty() ? '' : guardianPad.toDataURL();
@@ -889,22 +906,7 @@
       pdf.save('Registration-Signed.pdf');
     });
 
-    // ===== Print waiver (no text changes) =====
-    document.getElementById('printWaiverBtn').addEventListener('click', ()=>{
-      const w = window.open('', 'printwaiver');
-      w.document.write(`
-        <html><head><title>Waiver</title>
-          <style>
-            body{font-family:system-ui, -apple-system, Segoe UI, Roboto; margin:24px; line-height:1.5}
-          </style>
-        </head><body>
-          ${document.getElementById('waiverText').innerHTML}
-        </body></html>
-      `);
-      w.document.close(); w.focus(); w.print();
-    });
-
-    // ===== Queue helpers (duplicated locally for clarity) =====
+    // ===== Queue helpers =====
     function enqueue(entry){
       const q = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
       q.push(entry);
@@ -923,5 +925,7 @@
   </script>
 </body>
 </html>
+
+
 
 
