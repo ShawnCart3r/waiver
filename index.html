@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>No Boundaries 2025 Registration</title>
   <meta name="color-scheme" content="light dark" />
+
+  <!-- Allow data: images so Base64 signature previews render -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' data: blob:;
+                 style-src 'self' 'unsafe-inline';
+                 script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+  <!-- jsPDF for client-side PDF generation (optional but enabled) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
   <style>
     :root {
       /* Palette */
@@ -101,7 +112,7 @@
       background: #ffffff; color: #000; font-size: 1rem;
       transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
       outline: none;
-      -webkit-text-fill-color: #000; /* ensure black while typing (iOS) */
+      -webkit-text-fill-color: #000;
     }
     textarea { min-height: 110px; height: auto; resize: vertical; }
     input::placeholder, textarea::placeholder { color: #9aa3b2; }
@@ -192,6 +203,11 @@
       border: 1px solid var(--border); border-radius: 10px; touch-action: none; background: #fff; user-select: none; cursor: crosshair;
     }
     .sig-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
+
+    /* Signature previews */
+    .sig-preview { display:none; margin-top: 10px; }
+    .sig-preview strong { display:block; margin-bottom: 6px; }
+    .sig-preview img { max-width: 420px; width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 6px; background: #fff; }
   </style>
 </head>
 <body>
@@ -200,7 +216,7 @@
       <div><img style="display:block;margin:0 auto; max-width: 100%;" src="/img/FF VT Logo.jpg" alt="Fleet Feet Vermont logo"></div>
       <h1 id="title">No Boundaries 2025 Registration</h1>
       <p class="subhead" id="desc">Join our Fall 2025 program. Please complete all required fields.</p>
-        <div><img style="display:block;margin:0 auto; max-width: 100%;" src="/img/NOBO.jpg" alt="Fleet Feet Vermont logo"></div>
+      <div><img style="display:block;margin:0 auto; max-width: 100%;" src="/img/NOBO.jpg" alt="No Boundaries"></div>
 
       <form id="regForm" aria-describedby="desc" novalidate>
         <!-- Contact -->
@@ -240,16 +256,9 @@
                 <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
               </select>
             </label>
-            <label>
-  Zip 
-  <input 
-    type="text" 
-    name="zip" 
-    pattern="\d{5}(-\d{4})?" 
-    inputmode="numeric" 
-    placeholder="12345" 
-    required>
-</label>
+            <label>Zip
+              <input type="text" name="zip" pattern="\d{5}(-\d{4})?" inputmode="numeric" placeholder="12345" required>
+            </label>
             <label>Phone
               <input type="tel" name="phone" inputmode="tel" placeholder="(555) 555-5555" aria-describedby="phoneHint">
             </label>
@@ -273,8 +282,7 @@
             <span id="pgLbl" class="sr-only" aria-hidden="true"></span>
             <label><input type="checkbox" name="programs" value="5k-walk"> 5k Walk</label>
             <label><input type="checkbox" name="programs" value="beginner-5k-run"> Beginner 5k Run</label>
-             <label><input type="checkbox" name="programs" value="beginner-5k-run"> Beginner 10k Run</label>
-            
+            <label><input type="checkbox" name="programs" value="beginner-10k-run"> Beginner 10k Run</label>
           </div>
           <div class="hint">Select at least one.</div>
         </fieldset>
@@ -303,6 +311,11 @@
               <button type="button" class="btn-secondary" id="guardianClear">Clear</button>
             </div>
             <input type="hidden" name="guardianSignature" id="guardianSignature">
+            <!-- Guardian preview -->
+            <div id="guardPreviewWrap" class="sig-preview">
+              <strong>Guardian Signature Preview</strong>
+              <img id="guardianPreview" alt="Guardian signature">
+            </div>
           </div>
 
           <div class="grid three" style="margin-top:12px;">
@@ -315,10 +328,16 @@
         <!-- Waiver -->
         <fieldset>
           <legend>Waiver &amp; Release of Liability</legend>
+
           <div class="row">
             <div id="waiverText"
                  class="small"
+                 role="document"
+                 tabindex="0"
+                 aria-label="Waiver text. Scroll to the end to enable the checkbox."
                  style="max-height:320px; overflow:auto; padding:12px; border:1px dashed var(--border); border-radius:12px; background:#fff;">
+
+              <!-- BEGIN: Waiver text (kept EXACTLY as provided) -->
               <p><strong>Individual Event Participation Waiver and Release of Liability</strong></p>
 
               <p>Individual as listed below (a “Participant”) desires to enter and participate in No Boundaries Fall 2025 (the “Event”), hosted by Fleet Feet Vermont (the “Event Director”). By signing below, and in consideration of the Released Parties (defined herein) accepting this entry and allowing them to participate in the Event and as a condition for entry and participation in the Event, Participant agrees to all the terms and conditions of this waiver and release (“Release”).</p>
@@ -346,8 +365,11 @@
               <p>I represent and warrant that I am the parent or legal guardian of the minor participant named above, no court has issued any order, judgment, or decree granting custody of the minor to anyone else or otherwise affecting my rights as parent or legal guardian, the minor has not been emancipated, I have the legal right, power, and authority to consent to this Release on behalf of the minor and myself, and I am at least 18 years of age. I agree to defend, indemnify, and hold harmless the Released Parties from and against all liabilities resulting from my breach or alleged breach of these representations and warranties.</p>
 
               <p>I have read, and I understand, this entire Release. By signing below, I hereby consent to and approve in all respects the terms and conditions of this Release and the minor&#39;s execution of this Release and agree that both the minor and I shall be bound by all of its terms and conditions.</p>
+              <!-- END: Waiver text (unchanged) -->
             </div>
           </div>
+
+          <div class="hint" id="waiverHint">Tip: You can use Page Down or End to jump to the bottom.</div>
 
           <div class="checkbox-group" style="margin-top:var(--space-3);">
             <label style="border-style:solid;">
@@ -359,6 +381,8 @@
           <div class="grid two">
             <label>Initials <input type="text" name="waiverInitials" maxlength="4" placeholder="ABC" required></label>
           </div>
+
+          <button type="button" id="printWaiverBtn" class="btn-secondary" style="margin-top:10px">Print Waiver</button>
 
           <!-- Participant Signature -->
           <div class="sig-wrap" id="participantSigWrap" style="margin-top:12px;">
@@ -373,6 +397,12 @@
             </div>
             <input type="hidden" name="participantSignature" id="participantSignature" required>
             <div class="hint">Required for all participants.</div>
+
+            <!-- Participant preview -->
+            <div id="sigPreviewWrap" class="sig-preview">
+              <strong>Participant Signature Preview</strong>
+              <img id="participantPreview" alt="Participant signature">
+            </div>
           </div>
         </fieldset>
 
@@ -380,6 +410,7 @@
         <div class="actions">
           <button type="submit" class="btn-primary">Submit Registration</button>
           <button id="retryBtn" type="button" class="btn-secondary">Retry Pending</button>
+          <button id="downloadPdfBtn" type="button" class="btn-secondary">Download Signed PDF</button>
         </div>
         <div class="status" id="formStatus" role="status" aria-live="polite"></div>
       </form>
@@ -413,20 +444,35 @@
         guardInputs.forEach(i => i.required = false);
         document.getElementById('guardianSignature').required = false;
       }
+      refreshSignaturePreviews(); // hide/show guardian preview as needed
     }
     ageAdult.addEventListener("change", toggleGuardian);
     ageMinor.addEventListener("change", toggleGuardian);
     toggleGuardian();
 
-    // ===== Waiver scroll-to-enable =====
-    const waiverBox = document.getElementById('waiverText');
+    // ===== Waiver scroll-to-enable (with accessibility & no-scroll fallback) =====
+    const waiverBox   = document.getElementById('waiverText');
     const waiverAgree = document.getElementById('waiverAgree');
+
+    function canScroll(el){ return el.scrollHeight - el.clientHeight > 2; }
+    function updateWaiverState(){
+      if (!canScroll(waiverBox)) {
+        waiverAgree.disabled = false; // nothing to scroll — allow agreement
+      } else {
+        if (!waiverAgree.checked) waiverAgree.disabled = true;
+      }
+    }
     function checkWaiverScrolled() {
       const atBottom = waiverBox.scrollTop + waiverBox.clientHeight >= waiverBox.scrollHeight - 4;
       if (atBottom) waiverAgree.disabled = false;
     }
     waiverBox.addEventListener('scroll', checkWaiverScrolled);
-    window.addEventListener('load', checkWaiverScrolled);
+    waiverBox.addEventListener('keydown', e=>{
+      if (e.key === 'End') { waiverBox.scrollTop = waiverBox.scrollHeight; e.preventDefault(); }
+      if (e.key === 'PageDown') { waiverBox.scrollTop += waiverBox.clientHeight; e.preventDefault(); }
+    });
+    window.addEventListener('load',  ()=>{ updateWaiverState(); checkWaiverScrolled(); });
+    window.addEventListener('resize',()=>{ updateWaiverState(); checkWaiverScrolled(); });
 
     // ===== Phone helpers (format (###) ###-####) =====
     function formatPhone(el) {
@@ -439,7 +485,7 @@
     ['phone','ecPhone'].forEach(name=>{
       const el = form.querySelector(`input[name="${name}"]`);
       el.addEventListener('input', ()=>formatPhone(el));
-      el.addEventListener('blur', ()=>formatPhone(el));
+      el.addEventListener('blur',  ()=>formatPhone(el));
     });
 
     // ===== Ensure at least one Program selected =====
@@ -518,9 +564,10 @@
           this._redraw(); // incremental redraw
           this.onChange(false);
         });
-        const end = (e)=>{
+        const end = ()=>{
           if (this.current && this.current.length>0) this.strokes.push(this.current);
           this.current = null;
+          this.onChange(false); // trigger export on stroke end too
         };
         c.addEventListener('pointerup', end);
         c.addEventListener('pointerleave', end);
@@ -582,10 +629,7 @@
       }
       _redraw(clear=false){
         if (clear) this._paintBg();
-        else {
-          // repaint bg, then all strokes
-          this._paintBg();
-        }
+        else this._paintBg();
         for (const s of this.strokes) this._drawStroke(s);
         if (this.current) this._drawStroke(this.current);
       }
@@ -603,7 +647,6 @@
       isEmpty(){ return this.strokes.length===0 && (!this.current || this.current.length===0); }
 
       _exportScaled(mime=EXPORT_MIME, quality=EXPORT_QUALITY){
-        // draw onto an offscreen canvas to constrain width & compress
         const rect = this.canvas.getBoundingClientRect();
         const scale = Math.min(1, MAX_EXPORT_WIDTH / rect.width);
         const outW = Math.round(rect.width * scale);
@@ -611,15 +654,16 @@
         const off = document.createElement('canvas');
         off.width = outW; off.height = outH;
         const octx = off.getContext('2d');
-        // bg
+        // bg (white); switch to transparent by removing this if you use PNG
         octx.fillStyle = '#fff'; octx.fillRect(0,0,outW,outH);
 
-        // replay strokes scaled
         const s = scale;
         octx.lineCap = 'round'; octx.lineJoin = 'round'; octx.strokeStyle = this.ink;
         const drawScaled = (pts)=>{
           if (pts.length<2){
-            const p = pts[0]; octx.beginPath(); octx.arc(p.x*s, p.y*s, this.baseWidth*s, 0, Math.PI*2); octx.fill(); octx.closePath(); return;
+            const p = pts[0];
+            octx.beginPath(); octx.arc(p.x*s, p.y*s, this.baseWidth*s, 0, Math.PI*2); octx.fill(); octx.closePath();
+            return;
           }
           const mid=(a,b)=>({x:(a.x+b.x)/2, y:(a.y+b.y)/2, p:(a.p+b.p)/2});
           let prev=pts[0], mPrev=prev;
@@ -643,13 +687,27 @@
     }
 
     // ===== Initialize signature pads =====
+    const participantHidden = document.getElementById('participantSignature');
     const participantPad = new ProSignaturePad(
       document.getElementById('participantSig'),
-      (isEmpty)=>{ if (!isEmpty) document.getElementById('participantSignature').setCustomValidity(''); }
+      () => { // onChange: keep hidden input + preview in sync
+        if (!participantPad.isEmpty()) {
+          participantHidden.value = participantPad.toDataURL();
+          participantHidden.setCustomValidity('');
+        }
+        refreshSignaturePreviews();
+      }
     );
-    document.getElementById('participantUndo').addEventListener('click', ()=>participantPad.undo());
+    document.getElementById('participantUndo').addEventListener('click', ()=>{
+      participantPad.undo();
+      if (participantPad.isEmpty()) participantHidden.value = '';
+      else participantHidden.value = participantPad.toDataURL();
+      refreshSignaturePreviews();
+    });
     document.getElementById('participantClear').addEventListener('click', ()=>{
-      participantPad.clear(); document.getElementById('participantSignature').value = '';
+      participantPad.clear();
+      participantHidden.value = '';
+      refreshSignaturePreviews();
     });
 
     const guardianCanvas = document.getElementById('guardianSig');
@@ -658,12 +716,49 @@
     if (guardianCanvas) {
       guardianPad = new ProSignaturePad(
         guardianCanvas,
-        (isEmpty)=>{ if (!isEmpty) guardianHidden.setCustomValidity(''); }
+        () => {
+          if (!guardianPad.isEmpty()) {
+            guardianHidden.value = guardianPad.toDataURL();
+            guardianHidden.setCustomValidity('');
+          }
+          refreshSignaturePreviews();
+        }
       );
-      document.getElementById('guardianUndo').addEventListener('click', ()=>guardianPad.undo());
+      document.getElementById('guardianUndo').addEventListener('click', ()=>{
+        guardianPad.undo();
+        guardianHidden.value = guardianPad.isEmpty() ? '' : guardianPad.toDataURL();
+        refreshSignaturePreviews();
+      });
       document.getElementById('guardianClear').addEventListener('click', ()=>{
         guardianPad.clear(); guardianHidden.value = '';
+        refreshSignaturePreviews();
       });
+    }
+
+    // ===== Signature preview helper =====
+    function refreshSignaturePreviews(){
+      // Participant
+      const partWrap = document.getElementById('sigPreviewWrap');
+      const partImg  = document.getElementById('participantPreview');
+      if (participantHidden.value) {
+        partImg.src = participantHidden.value;
+        partWrap.style.display = 'block';
+      } else {
+        partWrap.style.display = 'none';
+        partImg.removeAttribute('src');
+      }
+
+      // Guardian
+      const guardWrap = document.getElementById('guardPreviewWrap');
+      const guardImg  = document.getElementById('guardianPreview');
+      const guardianFieldsVisible = (document.getElementById('guardianFields').style.display !== 'none');
+      if (guardianFieldsVisible && guardianHidden && guardianHidden.value) {
+        guardImg.src = guardianHidden.value;
+        guardWrap.style.display = 'block';
+      } else {
+        guardWrap.style.display = 'none';
+        if (guardImg) guardImg.removeAttribute('src');
+      }
     }
 
     // ===== Submit handler =====
@@ -673,8 +768,7 @@
       // Programs required
       if (!validatePrograms()) return;
 
-      // Signatures
-      const participantHidden = document.getElementById('participantSignature');
+      // Ensure hidden inputs have latest signatures
       if (participantPad.isEmpty()) {
         participantHidden.setCustomValidity('Please provide your signature.');
       } else {
@@ -686,10 +780,11 @@
         if (isMinor && guardianPad.isEmpty()) {
           guardianHidden.setCustomValidity('Parent/Guardian signature required for minors.');
         } else {
-          if (!guardianPad.isEmpty()) guardianHidden.value = guardianPad.toDataURL();
+          guardianHidden.value = guardianPad.isEmpty() ? '' : guardianPad.toDataURL();
           guardianHidden.setCustomValidity('');
         }
       }
+      refreshSignaturePreviews();
 
       // Built-in validation
       if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -715,11 +810,13 @@
           statusEl.className = "status success";
           statusEl.textContent = "Saved offline. We’ll auto-send when you’re back online.";
           form.reset(); participantPad.clear(); guardianPad && guardianPad.clear(); toggleGuardian();
+          refreshSignaturePreviews();
         } else {
           await postWithRetry(fd);
           statusEl.className = "status success";
           statusEl.textContent = "Thanks! Your registration has been submitted.";
           form.reset(); participantPad.clear(); guardianPad && guardianPad.clear(); toggleGuardian();
+          refreshSignaturePreviews();
         }
       }catch(err){
         enqueue(fdToObj(fd));
@@ -745,8 +842,86 @@
       statusEl.textContent = remain.length ? `Retry finished. ${remain.length} left.` : "All pending submissions sent.";
     });
 
-    window.addEventListener("load", showRetryIfNeeded);
+    window.addEventListener("load", ()=>{
+      showRetryIfNeeded();
+      refreshSignaturePreviews();
+    });
+
+    // ===== PDF download =====
+    document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+      const { jsPDF } = window.jspdf || {};
+      if (!jsPDF) {
+        alert('PDF generator not loaded.');
+        return;
+      }
+      // Ensure participant has signed
+      if (!participantHidden.value) {
+        if (!participantPad.isEmpty()) participantHidden.value = participantPad.toDataURL();
+      }
+      if (!participantHidden.value) {
+        statusEl.className = "status warn";
+        statusEl.textContent = "Please add a participant signature before generating a PDF.";
+        return;
+      }
+
+      const pdf = new jsPDF({ unit: 'pt', format: 'letter' }); // 612 x 792
+
+      pdf.setFont('helvetica', 'bold'); pdf.setFontSize(16);
+      pdf.text('Registration & Waiver — Signature Record', 40, 50);
+
+      pdf.setFont('helvetica', 'normal'); pdf.setFontSize(12);
+      pdf.text(`Generated: ${new Date().toLocaleString()}`, 40, 70);
+      pdf.line(40, 90, 572, 90);
+
+      // Participant signature
+      const sigDataUrl = participantHidden.value;
+      const maxW = 532, sigW = 400, sigH = 160, drawW = Math.min(sigW, maxW), drawH = sigH * (drawW / sigW);
+      pdf.text('Participant Signature:', 40, 130);
+      pdf.addImage(sigDataUrl, 'JPEG', 40, 140, drawW, drawH);
+
+      // Guardian signature (if present)
+      if (guardianHidden && guardianHidden.value) {
+        const gy = 160 + drawH + 40;
+        pdf.text('Parent/Guardian Signature:', 40, gy);
+        pdf.addImage(guardianHidden.value, 'JPEG', 40, gy + 10, drawW, drawH);
+      }
+
+      pdf.save('Registration-Signed.pdf');
+    });
+
+    // ===== Print waiver (no text changes) =====
+    document.getElementById('printWaiverBtn').addEventListener('click', ()=>{
+      const w = window.open('', 'printwaiver');
+      w.document.write(`
+        <html><head><title>Waiver</title>
+          <style>
+            body{font-family:system-ui, -apple-system, Segoe UI, Roboto; margin:24px; line-height:1.5}
+          </style>
+        </head><body>
+          ${document.getElementById('waiverText').innerHTML}
+        </body></html>
+      `);
+      w.document.close(); w.focus(); w.print();
+    });
+
+    // ===== Queue helpers (duplicated locally for clarity) =====
+    function enqueue(entry){
+      const q = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
+      q.push(entry);
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(q));
+    }
+    function dequeueAll(){
+      const q = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
+      localStorage.removeItem(QUEUE_KEY);
+      return q;
+    }
+    function fdToObj(fd){
+      const obj={};
+      fd.forEach((v,k)=>{ if (obj[k]) { Array.isArray(obj[k]) ? obj[k].push(v) : obj[k] = [obj[k], v]; } else obj[k]=v; });
+      return obj;
+    }
   </script>
 </body>
 </html>
+
 
