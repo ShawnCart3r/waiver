@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * CONFIG
    * ======================= */
   const SHEET_ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbw-lyhe7RCJX-G6hegkB5ud9oJXxD8qrWhwH76zNJ5tZlZ2QoImt2t4UqWvuyeYd6f-WA/exec";
+    "https://script.google.com/macros/s/AKfycbyvI7YV1xXFrrNlw1PznWFe6pei58SvATFk0FjEFfOxMYrVFKYCZC_tdowVQlfaBnyO3g/exec";
 
   const MAX_EXPORT_WIDTH = 900;
   const EXPORT_MIME = "image/png";
